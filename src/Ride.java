@@ -202,7 +202,6 @@ public class Ride implements RideInterface {
         System.out.println("Total cycles run: " + totalCyclesRun);
         System.out.println("Ride cycle completed successfully");
     }
-    // PART 6
     public void exportRideHistory() {
         if (riderHistory.isEmpty()) {
             System.out.println("No visitors in history to save");
@@ -236,7 +235,6 @@ public class Ride implements RideInterface {
             System.out.println("Error: " + e.getMessage());
         }
     }
-        // another method to save with custom filename
     public void exportRideHistory(String customFilename) {
         if (riderHistory.isEmpty()) {
             System.out.println("No visitors in history to save");
@@ -266,5 +264,65 @@ public class Ride implements RideInterface {
             System.out.println("Error saving to file: " + customFilename);
             System.out.println("Error: " + e.getMessage());
         }
+    }
+    // PART 7
+    public void importRideHistory(String filename) {
+        int importedCount = 0;
+        
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String line;
+            boolean firstLine = true;
+            
+            while ((line = reader.readLine()) != null) {
+                // skip the header line
+                if (firstLine) {
+                    firstLine = false;
+                    continue;
+                }
+                
+                // skip empty lines
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                
+                // split the line by commas
+                String[] parts = line.split(",");
+                
+                // check if we have enough parts
+                if (parts.length >= 5) {
+                    try {
+                        String name = parts[0];
+                        int age = Integer.parseInt(parts[1]);
+                        String id = parts[2];
+                        String ticketType = parts[3];
+                        boolean isVIP = Boolean.parseBoolean(parts[4]);
+                        
+                        // make new visitor and add to history
+                        Visitor visitor = new Visitor(name, age, id, ticketType, isVIP);
+                        riderHistory.add(visitor);
+                        importedCount++;
+                        
+                    } catch (NumberFormatException e) {
+                        System.out.println("Bad number in line: " + line);
+                    }
+                } else {
+                    System.out.println("Not enough data in line: " + line);
+                }
+            }
+            
+            reader.close();
+            System.out.println("Imported " + importedCount + " visitors from: " + filename);
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + filename);
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + filename);
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    public void importRideHistory() {
+        String defaultFilename = rideName.replace(" ", "_") + "_history.txt";
+        importRideHistory(defaultFilename);
     }
 }

@@ -1,16 +1,18 @@
+import java.io.*;
 public class ThemeParkApp {
     
     public static void main(String[] args) {
         System.out.println("My Theme Park Program Starting...");
        
         // test my classes
-        stepOne();
-        stepTwo();
-        stepThree();
-        stepFourA();
-        stepFourB();
-        stepFive();
-        stepSix();
+        // stepOne();
+        // stepTwo();
+        // stepThree();
+        // stepFourA();
+        // stepFourB();
+        // stepFive();
+        // stepSix();
+        stepSeven();
     }
     
     public static void stepOne() {
@@ -297,5 +299,74 @@ public class ThemeParkApp {
         
         System.out.println("\nPart 6 done - check project folder for .txt and .csv files");
     }
-    public void stepSeven() {}
+    public static void stepSeven() {
+        System.out.println("=== Testing Part 7 ===");
+        
+        // make a new empty ride for import testing
+        Employee importOp = new Employee("Import Guy", 33, "E008", "operator", 3100.0);
+        Ride importRide = new Ride("Import Coaster", "import", 25, importOp);
+        
+        System.out.println("Made new ride: " + importRide.getRideName());
+        
+        // check history is empty before import
+        System.out.println("\nBefore import:");
+        System.out.print("Visitors in history: ");
+        importRide.numberOfVisitors();
+        importRide.printRideHistory();
+        
+        // import from the file we made in part 6
+        System.out.println("\nImporting from file:");
+        importRide.importRideHistory("import_test.csv");
+        
+        // check results after import
+        System.out.println("\nAfter import:");
+        System.out.print("Visitors in history: ");
+        importRide.numberOfVisitors();
+        importRide.printRideHistory();
+        
+        // test importing from default file
+        System.out.println("\nTesting default file import:");
+        
+        // first make and export some data
+        Ride defaultRide = new Ride("Default Ride", "default", 15, importOp);
+        Visitor d1 = new Visitor("Default One", 20, "D001", "regular", false);
+        Visitor d2 = new Visitor("Default Two", 25, "D002", "vip", true);
+        defaultRide.addVisitorToHistory(d1);
+        defaultRide.addVisitorToHistory(d2);
+        defaultRide.exportRideHistory(); // makes "Default_Ride_history.txt"
+        
+        // make new ride and import from default file
+        Ride newRide = new Ride("Default Ride", "new", 10, importOp);
+        System.out.println("\nBefore default import:");
+        newRide.printRideHistory();
+        
+        newRide.importRideHistory(); // should import from "Default_Ride_history.txt"
+        
+        System.out.println("\nAfter default import:");
+        newRide.printRideHistory();
+        
+        // test error cases
+        System.out.println("\nTesting error cases:");
+        
+        // test file not found
+        Ride errorRide = new Ride("Error Ride", "error", 5, importOp);
+        errorRide.importRideHistory("file_that_doesnt_exist.csv");
+        
+        // test empty file
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("empty_test.csv"));
+            writer.println("Name,Age,ID,TicketType,VIP"); // only header, no data
+            writer.close();
+            
+            Ride emptyFileRide = new Ride("Empty File Ride", "test", 5, importOp);
+            emptyFileRide.importRideHistory("empty_test.csv");
+            System.out.print("Imported from empty file: ");
+            emptyFileRide.numberOfVisitors();
+            
+        } catch (IOException e) {
+            System.out.println("Error making test file: " + e.getMessage());
+        }
+        
+        System.out.println("\nPart 7 done - file import/export both working now");
+    }
 }
