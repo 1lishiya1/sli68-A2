@@ -10,6 +10,7 @@ public class ThemeParkApp {
         stepFourA();
         stepFourB();
         stepFive();
+        stepSix();
     }
     
     public static void stepOne() {
@@ -45,17 +46,17 @@ public class ThemeParkApp {
         System.out.println("=== Testing Part 3 ===");
         
         // make a ride
-        Employee op = new Employee("Sam", 28, "E003", "ride guy", 2800.0);
+        Employee op = new Employee("Chen", 28, "E003", "ride guy", 2800.0);
         Ride myRide = new Ride("Big Coaster", "scary", 25, op);
         
         System.out.println("Made ride: " + myRide.getRideName());
         
         // make 5 visitors like assignment says
-        Visitor v1 = new Visitor("Tom", 22, "V101", "day", false);
+        Visitor v1 = new Visitor("Mike", 22, "V101", "day", false);
         Visitor v2 = new Visitor("Emma", 19, "V102", "vip", true);
         Visitor v3 = new Visitor("James", 35, "V103", "regular", false);
-        Visitor v4 = new Visitor("Lisa", 27, "V104", "day", false);
-        Visitor v5 = new Visitor("David", 31, "V105", "vip", true);
+        Visitor v4 = new Visitor("Louis", 27, "V104", "day", false);
+        Visitor v5 = new Visitor("Danny", 31, "V105", "vip", true);
         Visitor v6 = new Visitor("Sophia", 24, "V106", "regular", false); // extra one
         
         // add them to queue
@@ -252,6 +253,49 @@ public class ThemeParkApp {
         
         System.out.println("Part 5 testing done");
     }
-    public void stepSix() {}
+    public static  void stepSix() {
+        System.out.println("=== Testing Part 6 ===");
+        
+        // make a new ride for file testing
+        Employee fileOp = new Employee("File Guy", 35, "E007", "operator", 3000.0);
+        Ride fileRide = new Ride("xiaomi su7", "xiaomi su7", 20, fileOp);
+        
+        System.out.println("Made ride: " + fileRide.getRideName());
+        
+        // make and add at least 5 visitors to history
+        System.out.println("\nAdding visitors to history:");
+        Visitor p1 = new Visitor("Ukiveil File", 25, "F001", "day pass", false);
+        Visitor p2 = new Visitor("Uniapp File", 30, "F002", "vip", true);
+        Visitor p3 = new Visitor("Mike File", 22, "F003", "regular", false);
+        Visitor p4 = new Visitor("Sarah File", 28, "F004", "vip", true);
+        Visitor p5 = new Visitor("Mike File", 35, "F005", "season", false);
+        Visitor p6 = new Visitor("Louis File", 19, "F006", "regular", true); // extra one
+        
+        fileRide.addVisitorToHistory(p1);
+        fileRide.addVisitorToHistory(p2);
+        fileRide.addVisitorToHistory(p3);
+        fileRide.addVisitorToHistory(p4);
+        fileRide.addVisitorToHistory(p5);
+        fileRide.addVisitorToHistory(p6); // added 6 total
+        
+        // show history before export
+        System.out.println("\nHistory before export:");
+        fileRide.printRideHistory();
+        
+        // export to file with auto name
+        System.out.println("\nExporting to file with auto name:");
+        fileRide.exportRideHistory();
+        
+        // export to file with custom name
+        System.out.println("\nExporting to file with custom name:");
+        fileRide.exportRideHistory("my_ride_data.csv");
+        
+        // test with empty history
+        System.out.println("\nTesting empty history:");
+        Ride emptyRide = new Ride("Empty Ride", "test", 10, fileOp);
+        emptyRide.exportRideHistory();
+        
+        System.out.println("\nPart 6 done - check project folder for .txt and .csv files");
+    }
     public void stepSeven() {}
 }

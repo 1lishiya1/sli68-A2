@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -161,7 +162,6 @@ public class Ride implements RideInterface {
             count++;
         }
     }
-    // PART 5
     public void runOneCycle() {
         // check if operator is there
         if (operator == null) {
@@ -201,5 +201,70 @@ public class Ride implements RideInterface {
         System.out.println("People in line after: " + waitingLine.size());
         System.out.println("Total cycles run: " + totalCyclesRun);
         System.out.println("Ride cycle completed successfully");
+    }
+    // PART 6
+    public void exportRideHistory() {
+        if (riderHistory.isEmpty()) {
+            System.out.println("No visitors in history to save");
+            return;
+        }
+        
+        // make filename from ride name
+        String filename = rideName.replace(" ", "_") + "_history.txt";
+        
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(filename));
+            
+            // write header line
+            writer.println("Name,Age,ID,TicketType,VIP");
+            
+            // write each visitor as one line
+            for (Visitor visitor : riderHistory) {
+                String line = visitor.getName() + "," +
+                             visitor.getAge() + "," +
+                             visitor.getId() + "," +
+                             visitor.getTicketType() + "," +
+                             visitor.getHasVIP();
+                writer.println(line);
+            }
+            
+            writer.close(); // close the file
+            System.out.println("Saved " + riderHistory.size() + " visitors to file: " + filename);
+            
+        } catch (IOException e) {
+            System.out.println("Error saving to file: " + filename);
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+        // another method to save with custom filename
+    public void exportRideHistory(String customFilename) {
+        if (riderHistory.isEmpty()) {
+            System.out.println("No visitors in history to save");
+            return;
+        }
+        
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(customFilename));
+            
+            // write header line
+            writer.println("Name,Age,ID,TicketType,VIP");
+            
+            // write each visitor as one line
+            for (Visitor visitor : riderHistory) {
+                String line = visitor.getName() + "," +
+                             visitor.getAge() + "," +
+                             visitor.getId() + "," +
+                             visitor.getTicketType() + "," +
+                             visitor.getHasVIP();
+                writer.println(line);
+            }
+            
+            writer.close();
+            System.out.println("Saved " + riderHistory.size() + " visitors to file: " + customFilename);
+            
+        } catch (IOException e) {
+            System.out.println("Error saving to file: " + customFilename);
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
