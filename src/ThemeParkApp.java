@@ -9,6 +9,7 @@ public class ThemeParkApp {
         stepThree();
         stepFourA();
         stepFourB();
+        stepFive();
     }
     
     public static void stepOne() {
@@ -193,7 +194,64 @@ public class ThemeParkApp {
         
         System.out.println("Part 4B testing done");
     }
-    public void stepFive() {}
+    public static void stepFive() {
+        System.out.println("=== Testing Part 5 ===");
+        
+        // make a ride with max riders = 3
+        Employee operator = new Employee("Cycle Master", 26, "E006", "operator", 2900.0);
+        Ride rollerCoaster = new Ride("Lightning Coaster", "thrill", 15, operator, 3);
+        
+        System.out.println("Made ride: " + rollerCoaster.getRideName());
+        System.out.println("Max riders per cycle: " + rollerCoaster.getMaxRidersPerCycle());
+        
+        // make 10 visitors like assignment says
+        System.out.println("\nAdding 10 visitors to line:");
+        for (int i = 1; i <= 10; i++) {
+            Visitor visitor = new Visitor("Person" + i, 20 + i, "V" + (400 + i), "regular", i % 3 == 0);
+            rollerCoaster.addVisitorToQueue(visitor);
+        }
+        
+        // show line before running
+        System.out.println("\nLine before running cycle:");
+        rollerCoaster.printQueue();
+        
+        // run one cycle
+        System.out.println("\nRunning one cycle:");
+        rollerCoaster.runOneCycle();
+        
+        // show line after running
+        System.out.println("\nLine after running cycle:");
+        rollerCoaster.printQueue();
+        
+        // show history
+        System.out.println("\nRide history after cycle:");
+        rollerCoaster.printRideHistory();
+        
+        // test problems
+        System.out.println("\nTesting problems:");
+        
+        // test ride with no operator
+        Ride noOpRide = new Ride("Broken Ride", "test", 10, null, 2);
+        noOpRide.addVisitorToQueue(new Visitor("Test", 20, "T001", "test", false));
+        noOpRide.runOneCycle();
+        
+        // test ride with empty line
+        Ride emptyRide = new Ride("Empty Ride", "test", 5, operator, 2);
+        emptyRide.runOneCycle();
+        
+        // run another cycle on our ride
+        System.out.println("\nRunning second cycle:");
+        rollerCoaster.runOneCycle();
+        System.out.println("Total cycles run now: " + rollerCoaster.getTotalCyclesRun());
+        
+        // show everything after second cycle
+        System.out.println("\nFinal line after second cycle:");
+        rollerCoaster.printQueue();
+        System.out.println("\nFinal history after second cycle:");
+        rollerCoaster.printRideHistory();
+        
+        System.out.println("Part 5 testing done");
+    }
     public void stepSix() {}
     public void stepSeven() {}
 }

@@ -5,13 +5,10 @@ public class Ride implements RideInterface {
     private String type;
     private int capacity;
     private Employee operator;
-    
-    // part 3 stuff
     private Queue<Visitor> waitingLine;
-    
-    // new for part 4A - history of riders
     private LinkedList<Visitor> riderHistory;
-    
+    private int maxRidersPerCycle;
+    private int totalCyclesRun;
     // constructor
     public Ride() {
         this.rideName = "new ride";
@@ -19,7 +16,9 @@ public class Ride implements RideInterface {
         this.capacity = 10;
         this.operator = null;
         this.waitingLine = new LinkedList<>();
-        this.riderHistory = new LinkedList<>(); // new list for history
+        this.riderHistory = new LinkedList<>();
+        this.maxRidersPerCycle = 4; // default
+        this.totalCyclesRun = 0; // start at zero
     }
     
     // constructor with values
@@ -29,22 +28,34 @@ public class Ride implements RideInterface {
         this.capacity = capacity;
         this.operator = operator;
         this.waitingLine = new LinkedList<>();
-        this.riderHistory = new LinkedList<>(); // new list for history
+        this.riderHistory = new LinkedList<>();
+        this.maxRidersPerCycle = 4; // default
+        this.totalCyclesRun = 0; // start at zero
     }
-    
-    // get methods (same)
+    public Ride(String rideName, String type, int capacity, Employee operator, int maxRiders) {
+        this.rideName = rideName;
+        this.type = type;
+        this.capacity = capacity;
+        this.operator = operator;
+        this.waitingLine = new LinkedList<>();
+        this.riderHistory = new LinkedList<>();
+        this.maxRidersPerCycle = maxRiders;
+        this.totalCyclesRun = 0;
+    }
     public String getRideName() { return rideName; }
     public String getType() { return type; }
     public int getCapacity() { return capacity; }
     public Employee getOperator() { return operator; }
-    
-    // set methods (same)
+    public int getMaxRidersPerCycle() { return maxRidersPerCycle; }
+    public int getTotalCyclesRun() { return totalCyclesRun; }
     public void setRideName(String rideName) { this.rideName = rideName; }
     public void setType(String type) { this.type = type; }
     public void setCapacity(int capacity) { this.capacity = capacity; }
     public void setOperator(Employee operator) { this.operator = operator; }
-    
-    // PART 3 methods (same)
+    public void setMaxRidersPerCycle(int maxRiders) { this.maxRidersPerCycle = maxRiders; }
+    public void setTotalCyclesRun(int cycles) { this.totalCyclesRun = cycles; }
+
+
     public void addVisitorToQueue(Visitor visitor) {
         if (visitor == null) {
             System.out.println("Cant add null visitor");
@@ -78,7 +89,6 @@ public class Ride implements RideInterface {
         System.out.println("Total waiting: " + waitingLine.size());
     }
     
-    // PART 4A: now doing the history methods for real
     public void addVisitorToHistory(Visitor visitor) {
         if (visitor == null) {
             System.out.println("Cant add null visitor to history");
@@ -126,7 +136,6 @@ public class Ride implements RideInterface {
         }
         System.out.println("Total in history: " + riderHistory.size());
     }
-    // PART 4B: new method to sort the history
     public void sortRideHistory() {
         if (riderHistory.isEmpty()) {
             System.out.println("No visitors to sort");
@@ -137,7 +146,6 @@ public class Ride implements RideInterface {
         Collections.sort(riderHistory, new SortVisitors());
         System.out.println("Ride history sorted by VIP and age");
     }
-    // helper method to see if sorting worked
     public void showSortedInfo() {
         if (riderHistory.isEmpty()) {
             System.out.println("No visitors in history");
@@ -153,8 +161,45 @@ public class Ride implements RideInterface {
             count++;
         }
     }
-    // still todo for later parts
+    // PART 5
     public void runOneCycle() {
-        System.out.println("running cycle - do in part 5");
+        // check if operator is there
+        if (operator == null) {
+            System.out.println("Cant run " + rideName + " - no operator assigned");
+            return;
+        }
+        
+        // check if people are waiting
+        if (waitingLine.isEmpty()) {
+            System.out.println("Cant run " + rideName + " - no one in line");
+            return;
+        }
+        
+        System.out.println("=== Running " + rideName + " cycle ===");
+        System.out.println("Operator: " + operator.getName());
+        System.out.println("Max riders this cycle: " + maxRidersPerCycle);
+        System.out.println("People in line before: " + waitingLine.size());
+        
+        int ridersThisTime = 0;
+        
+        // take people from line and add to history
+        for (int i = 0; i < maxRidersPerCycle; i++) {
+            if (!waitingLine.isEmpty()) {
+                Visitor rider = waitingLine.remove();
+                riderHistory.add(rider);
+                ridersThisTime++;
+                System.out.println(" - " + rider.getName() + " is riding now");
+            } else {
+                break; // no more people in line
+            }
+        }
+        
+        // update cycle count
+        totalCyclesRun++;
+        
+        System.out.println("Cycle finished: " + ridersThisTime + " people rode");
+        System.out.println("People in line after: " + waitingLine.size());
+        System.out.println("Total cycles run: " + totalCyclesRun);
+        System.out.println("Ride cycle completed successfully");
     }
 }
