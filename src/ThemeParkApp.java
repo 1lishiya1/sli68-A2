@@ -8,6 +8,7 @@ public class ThemeParkApp {
         stepTwo();
         stepThree();
         stepFourA();
+        stepFourB();
     }
     
     public static void stepOne() {
@@ -138,7 +139,60 @@ public class ThemeParkApp {
         
         System.out.println("Part 4A testing done");
     }
-    public void stepFourB() {}
+    public static void stepFourB() {
+        System.out.println("=== Testing Part 4B ===");
+        
+        // make a new ride for sorting test
+        Employee op = new Employee("Alex", 29, "E005", "operator", 2600.0);
+        Ride coaster = new Ride("Dragon Coaster", "thrill", 20, op);
+        
+        System.out.println("Made ride: " + coaster.getRideName());
+        
+        // make visitors with different VIP and ages for testing sort
+        Visitor v1 = new Visitor("Young VIP", 18, "V301", "vip", true);
+        Visitor v2 = new Visitor("Old Regular", 45, "V302", "regular", false);
+        Visitor v3 = new Visitor("Young Regular", 20, "V303", "regular", false);
+        Visitor v4 = new Visitor("Old VIP", 40, "V304", "vip", true);
+        Visitor v5 = new Visitor("Middle Regular", 30, "V305", "regular", false);
+        Visitor v6 = new Visitor("Middle VIP", 35, "V306", "vip", true); // extra one
+        
+        // add to history in mixed order
+        System.out.println("\nAdding visitors in mixed order:");
+        coaster.addVisitorToHistory(v2); // old regular
+        coaster.addVisitorToHistory(v1); // young VIP
+        coaster.addVisitorToHistory(v4); // old VIP
+        coaster.addVisitorToHistory(v3); // young regular
+        coaster.addVisitorToHistory(v6); // middle VIP
+        coaster.addVisitorToHistory(v5); // middle regular
+        
+        // show before sorting
+        System.out.println("\nBefore sorting:");
+        coaster.printRideHistory();
+        coaster.showSortedInfo();
+        
+        // do the sorting
+        System.out.println("\nSorting ride history...");
+        coaster.sortRideHistory();
+        
+        // show after sorting
+        System.out.println("\nAfter sorting:");
+        coaster.printRideHistory();
+        coaster.showSortedInfo();
+        
+        // test with empty ride
+        System.out.println("\nTesting empty ride:");
+        Ride emptyRide = new Ride("Empty", "test", 10, op);
+        emptyRide.sortRideHistory();
+        
+        // test with only one visitor
+        System.out.println("\nTesting with one visitor:");
+        Ride singleRide = new Ride("Single", "test", 5, op);
+        singleRide.addVisitorToHistory(new Visitor("One Person", 25, "S001", "regular", false));
+        singleRide.sortRideHistory();
+        singleRide.printRideHistory();
+        
+        System.out.println("Part 4B testing done");
+    }
     public void stepFive() {}
     public void stepSix() {}
     public void stepSeven() {}

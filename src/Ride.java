@@ -126,7 +126,33 @@ public class Ride implements RideInterface {
         }
         System.out.println("Total in history: " + riderHistory.size());
     }
-    
+    // PART 4B: new method to sort the history
+    public void sortRideHistory() {
+        if (riderHistory.isEmpty()) {
+            System.out.println("No visitors to sort");
+            return;
+        }
+        
+        // use Collections.sort with our comparator
+        Collections.sort(riderHistory, new SortVisitors());
+        System.out.println("Ride history sorted by VIP and age");
+    }
+    // helper method to see if sorting worked
+    public void showSortedInfo() {
+        if (riderHistory.isEmpty()) {
+            System.out.println("No visitors in history");
+            return;
+        }
+        
+        System.out.println("First few visitors after sorting:");
+        int count = 0;
+        for (Visitor visitor : riderHistory) {
+            if (count >= 3) break; // only show first 3
+            String vipStatus = visitor.getHasVIP() ? "VIP" : "Regular";
+            System.out.println(" - " + visitor.getName() + " (" + visitor.getAge() + " years, " + vipStatus + ")");
+            count++;
+        }
+    }
     // still todo for later parts
     public void runOneCycle() {
         System.out.println("running cycle - do in part 5");
