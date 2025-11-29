@@ -4,40 +4,37 @@ public class ThemeParkApp {
         System.out.println("My Theme Park Program Starting...");
         
         // test my classes
-        testMyClasses();
+        stepOne();
+        stepTwo();
     }
     
-    public static void testMyClasses() {
-        System.out.println("=== Testing My Classes ===");
+    public static void stepOne() {
+        System.out.println("Testing part 1");
         
-        // make an employee
-        Employee staff1 = new Employee("Bob Johnson", 28, "ID123", "Ride Operator", "EMP456");
-        System.out.println("Made employee: " + staff1.getFullName());
+        Employee emp1 = new Employee("John", 25, "E001", "operator", 3000.0);
+        Visitor vis1 = new Visitor("Alice", 20, "V001", "day pass", true);
+        Ride ride1 = new Ride("coaster", "fast", 20, emp1);
         
-        // make a visitor
-        Visitor guest1 = new Visitor("Alice Brown", 25, "VIS789", "Day Pass", true);
-        System.out.println("Made visitor: " + guest1.getFullName());
-        
-        // make a ride with the employee
-        Ride ride1 = new Ride("COASTER1", "Thrill Ride", 24, staff1);
-        System.out.println("Made ride: " + ride1.getRideId());
-        
-        // test that employee is assigned to ride
-        if (ride1.getPersonInCharge() != null) {
-            System.out.println("Ride operator: " + ride1.getPersonInCharge().getFullName());
-        }
-        
-        // test changing some values
-        guest1.setPassType("Season Pass");
-        System.out.println("Visitor now has: " + guest1.getPassType());
-        
-        // test inheritance
-        System.out.println("Is employee a person? " + (staff1 instanceof Person));
-        System.out.println("Is visitor a person? " + (guest1 instanceof Person));
-        
-        System.out.println("=== Testing Complete ===");
+        System.out.println("Made: " + emp1.getName() + ", " + vis1.getName() + ", " + ride1.getRideName());
     }
-    
+        // new method for part 2
+    public static void stepTwo() {
+        System.out.println("Testing part 2");
+        
+        Employee emp2 = new Employee("Mike", 30, "E002", "worker", 2500.0);
+        Ride ride2 = new Ride("wheel", "slow", 15, emp2);
+        
+        // check if ride uses the interface
+        boolean usesInterface = ride2 instanceof RideInterface;
+        System.out.println("Ride uses interface: " + usesInterface);
+        
+        // try the interface methods
+        Visitor testVisitor = new Visitor("test", 18, "T001", "test", false);
+        ride2.addVisitorToQueue(testVisitor);
+        ride2.printQueue();
+        
+        System.out.println("Part 2 test done");
+    }
     // these will be used later
     public void stepThree() {}
     public void stepFourA() {}

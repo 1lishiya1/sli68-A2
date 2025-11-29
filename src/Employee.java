@@ -1,38 +1,37 @@
 public class Employee extends Person {
-    // stuff only employees have
-    private String workPosition;
-    private String employeeNumber;
+    // stuff for employees
+    private String position;
+    private double pay;
     
-    // default constructor
+    // basic constructor
     public Employee() {
-        super(); // call parent constructor
-        this.workPosition = "Staff";
-        this.employeeNumber = "EMP000";
+        super(); // call person constructor
+        this.position = "staff";
+        this.pay = 0.0;
     }
     
     // constructor with all info
-    public Employee(String fullName, int yearsOld, String personalId, 
-                   String workPosition, String employeeNumber) {
-        super(fullName, yearsOld, personalId); // call parent constructor
-        this.workPosition = workPosition;
-        this.employeeNumber = employeeNumber;
+    public Employee(String name, int age, String id, String position, double pay) {
+        super(name, age, id); // call person constructor
+        this.position = position;
+        this.pay = pay;
     }
     
     // get methods
-    public String getWorkPosition() {
-        return workPosition;
+    public String getPosition() {
+        return position;
     }
     
-    public String getEmployeeNumber() {
-        return employeeNumber;
+    public double getPay() {
+        return pay;
     }
     
     // set methods
-    public void setWorkPosition(String workPosition) {
-        this.workPosition = workPosition;
+    public void setPosition(String position) {
+        this.position = position;
     }
     
-    public void setEmployeeNumber(String employeeNumber) {
-        this.employeeNumber = employeeNumber;
+    public void setPay(double pay) {
+        this.pay = pay;
     }
 }
