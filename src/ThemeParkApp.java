@@ -7,6 +7,7 @@ public class ThemeParkApp {
         stepOne();
         stepTwo();
         stepThree();
+        stepFourA();
     }
     
     public static void stepOne() {
@@ -18,7 +19,8 @@ public class ThemeParkApp {
         
         System.out.println("Made: " + emp1.getName() + ", " + vis1.getName() + ", " + ride1.getRideName());
     }
-        // new method for part 2
+
+    // new method for part 2
     public static void stepTwo() {
         System.out.println("Testing part 2");
         
@@ -36,7 +38,7 @@ public class ThemeParkApp {
         
         System.out.println("Part 2 test done");
     }
-    // these will be used later
+
     public static void stepThree(){
         System.out.println("=== Testing Part 3 ===");
         
@@ -85,7 +87,57 @@ public class ThemeParkApp {
         
         System.out.println("Part 3 testing done");
     }
-    public void stepFourA() {}
+    public static  void stepFourA() {
+        System.out.println("=== Testing Part 4A ===");
+        
+        // make a new ride
+        Employee worker = new Employee("Chris", 32, "E004", "operator", 2700.0);
+        Ride waterRide = new Ride("Splash Ride", "water", 30, worker);
+        
+        System.out.println("Made ride: " + waterRide.getRideName());
+        
+        // make 5 visitors for history
+        Visitor p1 = new Visitor("Anna", 25, "V201", "regular", false);
+        Visitor p2 = new Visitor("Ben", 30, "V202", "vip", true);
+        Visitor p3 = new Visitor("Cathy", 22, "V203", "day", false);
+        Visitor p4 = new Visitor("Dan", 28, "V204", "vip", true);
+        Visitor p5 = new Visitor("Eva", 35, "V205", "regular", false);
+        Visitor p6 = new Visitor("Frank", 40, "V206", "season", true); // extra one
+        
+        // add them to history
+        System.out.println("\nAdding visitors to history:");
+        waterRide.addVisitorToHistory(p1);
+        waterRide.addVisitorToHistory(p2);
+        waterRide.addVisitorToHistory(p3);
+        waterRide.addVisitorToHistory(p4);
+        waterRide.addVisitorToHistory(p5);
+        waterRide.addVisitorToHistory(p6); // added 6 total
+        
+        // check if visitor is in history
+        System.out.println("\nChecking visitors in history:");
+        waterRide.checkVisitorFromHistory(p3); // should be there
+        waterRide.checkVisitorFromHistory(new Visitor("Unknown", 99, "X999", "test", false)); // not there
+        
+        // count visitors
+        System.out.println("\nCounting visitors:");
+        waterRide.numberOfVisitors();
+        
+        // print history using iterator
+        System.out.println("\nPrinting ride history:");
+        waterRide.printRideHistory();
+        
+        // test problems
+        System.out.println("\nTesting problems:");
+        waterRide.addVisitorToHistory(null); // try null
+        waterRide.checkVisitorFromHistory(null); // try null
+        
+        // test empty ride
+        Ride emptyRide = new Ride("Empty", "test", 10, worker);
+        emptyRide.printRideHistory(); // print empty history
+        emptyRide.numberOfVisitors(); // count empty
+        
+        System.out.println("Part 4A testing done");
+    }
     public void stepFourB() {}
     public void stepFive() {}
     public void stepSix() {}

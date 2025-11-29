@@ -1,4 +1,4 @@
-import java.util.*; // need this for Queue
+import java.util.*;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -6,8 +6,11 @@ public class Ride implements RideInterface {
     private int capacity;
     private Employee operator;
     
-    // new stuff for part 3 - the waiting line
+    // part 3 stuff
     private Queue<Visitor> waitingLine;
+    
+    // new for part 4A - history of riders
+    private LinkedList<Visitor> riderHistory;
     
     // constructor
     public Ride() {
@@ -15,7 +18,8 @@ public class Ride implements RideInterface {
         this.type = "general";
         this.capacity = 10;
         this.operator = null;
-        this.waitingLine = new LinkedList<>(); // make the queue
+        this.waitingLine = new LinkedList<>();
+        this.riderHistory = new LinkedList<>(); // new list for history
     }
     
     // constructor with values
@@ -24,22 +28,23 @@ public class Ride implements RideInterface {
         this.type = type;
         this.capacity = capacity;
         this.operator = operator;
-        this.waitingLine = new LinkedList<>(); // make the queue
+        this.waitingLine = new LinkedList<>();
+        this.riderHistory = new LinkedList<>(); // new list for history
     }
     
-    // get methods (same as before)
+    // get methods (same)
     public String getRideName() { return rideName; }
     public String getType() { return type; }
     public int getCapacity() { return capacity; }
     public Employee getOperator() { return operator; }
     
-    // set methods (same as before)
+    // set methods (same)
     public void setRideName(String rideName) { this.rideName = rideName; }
     public void setType(String type) { this.type = type; }
     public void setCapacity(int capacity) { this.capacity = capacity; }
     public void setOperator(Employee operator) { this.operator = operator; }
     
-    // PART 3: now doing the queue methods for real
+    // PART 3 methods (same)
     public void addVisitorToQueue(Visitor visitor) {
         if (visitor == null) {
             System.out.println("Cant add null visitor");
@@ -73,25 +78,56 @@ public class Ride implements RideInterface {
         System.out.println("Total waiting: " + waitingLine.size());
     }
     
-    // these methods still todo for later parts
+    // PART 4A: now doing the history methods for real
     public void addVisitorToHistory(Visitor visitor) {
-        System.out.println("adding to history - do in part 4");
+        if (visitor == null) {
+            System.out.println("Cant add null visitor to history");
+            return;
+        }
+        riderHistory.add(visitor);
+        System.out.println("Added " + visitor.getName() + " to ride history");
     }
     
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        System.out.println("checking history - do in part 4");
-        return false;
+        if (visitor == null) {
+            System.out.println("Cant check null visitor");
+            return false;
+        }
+        
+        boolean found = riderHistory.contains(visitor);
+        if (found) {
+            System.out.println(visitor.getName() + " is in ride history");
+        } else {
+            System.out.println(visitor.getName() + " is NOT in ride history");
+        }
+        return found;
     }
     
     public int numberOfVisitors() {
-        System.out.println("counting visitors - do in part 4");
-        return 0;
+        int count = riderHistory.size();
+        System.out.println("There are " + count + " visitors in ride history");
+        return count;
     }
     
     public void printRideHistory() {
-        System.out.println("printing history - do in part 4");
+        if (riderHistory.isEmpty()) {
+            System.out.println("No visitors in ride history for " + rideName);
+            return;
+        }
+        
+        System.out.println("Ride history for " + rideName + ":");
+        // using iterator like assignment says
+        Iterator<Visitor> it = riderHistory.iterator();
+        int count = 1;
+        while (it.hasNext()) {
+            Visitor visitor = it.next();
+            System.out.println(count + ". " + visitor.toString());
+            count++;
+        }
+        System.out.println("Total in history: " + riderHistory.size());
     }
     
+    // still todo for later parts
     public void runOneCycle() {
         System.out.println("running cycle - do in part 5");
     }
